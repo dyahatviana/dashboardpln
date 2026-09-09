@@ -1,275 +1,1046 @@
 <!DOCTYPE html>
 <html lang="id">
+
 <head>
+
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard Pengaduan - PLN UP3 Surabaya Selatan</title>
-    <!-- Load Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Load Bootstrap Icons -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
-    <!-- Load Chart.js -->
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>
+        Dashboard Monitoring Pengaduan
+    </title>
+
+    <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+        rel="stylesheet">
+
+    <link
+        rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
 
     <style>
+
+        /* =========================
+           WARNA PLN
+        ========================= */
+
+        :root {
+
+            --pln-blue: #086eb5;
+
+            --pln-blue-dark: #075a96;
+
+            --pln-blue-light: #087fd0;
+
+            --pln-cyan: #08a4d8;
+
+            --pln-gradient:
+                linear-gradient(
+                    135deg,
+                    #075a96 0%,
+                    #087fd0 50%,
+                    #08a4d8 100%
+                );
+
+            --background:
+                #f4faff;
+
+            --text:
+                #17324d;
+
+        }
+
+
+        /* =========================
+           GLOBAL
+        ========================= */
+
+        * {
+            box-sizing: border-box;
+        }
+
         body {
-            background-color: #f8fafc; /* Latar belakang abu-abu sangat terang */
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            overflow-x: hidden;
+
+            margin: 0;
+
+            font-family:
+                'Segoe UI',
+                Tahoma,
+                Geneva,
+                Verdana,
+                sans-serif;
+
+            background:
+                #f4faff;
+
+            color:
+                var(--text);
+
+            overflow-x:
+                hidden;
         }
 
-        .wrapper { display: flex; width: 100%; align-items: stretch; }
 
-        /* Desain Sidebar Kiri */
+        /* =========================
+           WRAPPER
+        ========================= */
+
+        .wrapper {
+
+            display:
+                flex;
+
+            min-height:
+                100vh;
+
+            width:
+                100%;
+        }
+
+
+        /* =========================
+           SIDEBAR
+        ========================= */
+
         #sidebar {
-            min-width: 260px;
-            max-width: 260px;
-            min-height: 100vh;
-            background-color: #0f172a;
-            color: #f8fafc;
-            position: sticky;
-            top: 0;
-        }
-        #sidebar .nav-link {
-            color: rgba(255, 255, 255, 0.7);
-            border-radius: 8px;
-            margin-bottom: 5px;
-            padding: 12px 20px;
-            font-weight: 500;
-            transition: all 0.3s;
-        }
-        #sidebar .nav-link:hover, #sidebar .nav-link.active {
-            background-color: rgba(255, 255, 255, 0.1);
-            color: #38bdf8;
-            transform: translateX(4px);
+
+            width:
+                270px;
+
+            min-width:
+                270px;
+
+            min-height:
+                100vh;
+
+            padding:
+                30px 18px;
+
+            position:
+                sticky;
+
+            top:
+                0;
+
+            color:
+                white;
+
+            background:
+                linear-gradient(
+                    160deg,
+                    #075a96 0%,
+                    #087fd0 50%,
+                    #08a4d8 100%
+                );
+
+            box-shadow:
+                8px 0 30px
+                rgba(0,91,150,.15);
+
+            overflow:
+                hidden;
         }
 
-        .main-content { flex-grow: 1; padding: 2rem 3rem; }
 
-        /* Scorecards */
+        /* Lingkaran dekorasi */
+
+        #sidebar::before {
+
+            content:
+                "";
+
+            position:
+                absolute;
+
+            width:
+                220px;
+
+            height:
+                220px;
+
+            border-radius:
+                50%;
+
+            background:
+                rgba(255,255,255,.07);
+
+            top:
+                -100px;
+
+            right:
+                -100px;
+        }
+
+        #sidebar::after {
+
+            content:
+                "";
+
+            position:
+                absolute;
+
+            width:
+                180px;
+
+            height:
+                180px;
+
+            border-radius:
+                50%;
+
+            background:
+                rgba(255,255,255,.06);
+
+            bottom:
+                -80px;
+
+            left:
+                -90px;
+        }
+
+
+        /* =========================
+           LOGO
+        ========================= */
+
+        .sidebar-logo {
+
+            position:
+                relative;
+
+            z-index:
+                2;
+
+            text-align:
+                center;
+
+            margin-bottom:
+                25px;
+        }
+
+        .sidebar-logo i {
+
+            font-size:
+                3.2rem;
+
+            color:
+                white;
+
+            filter:
+                drop-shadow(
+                    0 5px 12px
+                    rgba(255,255,255,.25)
+                );
+        }
+
+        .sidebar-logo h5 {
+
+            margin:
+                10px 0 3px;
+
+            font-size:
+                1.3rem;
+
+            font-weight:
+                700;
+
+            color:
+                white;
+        }
+
+        .sidebar-logo small {
+
+            color:
+                rgba(255,255,255,.82);
+        }
+
+
+        #sidebar hr {
+
+            border-color:
+                rgba(255,255,255,.25);
+
+            margin:
+                25px 0;
+        }
+
+
+        /* =========================
+           MENU
+        ========================= */
+
+        .nav-link {
+
+            position:
+                relative;
+
+            z-index:
+                2;
+
+            display:
+                flex;
+
+            align-items:
+                center;
+
+            gap:
+                12px;
+
+            padding:
+                14px 18px;
+
+            margin-bottom:
+                9px;
+
+            border-radius:
+                14px;
+
+            color:
+                rgba(255,255,255,.88);
+
+            text-decoration:
+                none;
+
+            font-weight:
+                600;
+
+            transition:
+                .25s ease;
+        }
+
+        .nav-link i {
+
+            font-size:
+                1.15rem;
+
+            width:
+                22px;
+        }
+
+        .nav-link:hover {
+
+            background:
+                rgba(255,255,255,.16);
+
+            color:
+                white;
+
+            transform:
+                translateX(5px);
+        }
+
+        .nav-link.active {
+
+            background:
+                white;
+
+            color:
+                var(--pln-blue);
+
+            box-shadow:
+                0 8px 22px
+                rgba(0,0,0,.14);
+        }
+
+        .nav-link.active i {
+
+            color:
+                var(--pln-blue);
+        }
+
+
+        /* =========================
+           MAIN
+        ========================= */
+
+        .main-content {
+
+            flex:
+                1;
+
+            min-height:
+                100vh;
+
+            padding:
+                35px 45px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #f9fcff 0%,
+                    #eef8fd 100%
+                );
+        }
+
+
+        /* =========================
+           HEADER
+        ========================= */
+
+        .dashboard-header {
+
+            display:
+                flex;
+
+            justify-content:
+                space-between;
+
+            align-items:
+                center;
+
+            margin-bottom:
+                30px;
+        }
+
+        .dashboard-header h3 {
+
+            margin:
+                0;
+
+            font-size:
+                2rem;
+
+            font-weight:
+                750;
+
+            color:
+                #123b67;
+        }
+
+        .dashboard-header p {
+
+            margin-top:
+                7px;
+
+            color:
+                #6b8299;
+
+            font-size:
+                .98rem;
+        }
+
+
+        /* =========================
+           DATE
+        ========================= */
+
+        .date-box {
+
+            display:
+                flex;
+
+            align-items:
+                center;
+
+            gap:
+                10px;
+
+            padding:
+                13px 22px;
+
+            background:
+                white;
+
+            color:
+                var(--pln-blue);
+
+            border-radius:
+                50px;
+
+            box-shadow:
+                0 8px 25px
+                rgba(0,91,150,.10);
+
+            font-weight:
+                600;
+        }
+
+
+        /* =========================
+           KPI
+        ========================= */
+
+        .kpi-grid {
+
+            display:
+                grid;
+
+            grid-template-columns:
+                repeat(4,1fr);
+
+            gap:
+                25px;
+
+            margin-bottom:
+                30px;
+        }
+
         .card-summary {
-            border: none;
-            border-radius: 12px;
-            color: white;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
+
+            position:
+                relative;
+
+            overflow:
+                hidden;
+
+            min-height:
+                205px;
+
+            padding:
+                28px;
+
+            border-radius:
+                22px;
+
+            color:
+                white;
+
+            display:
+                flex;
+
+            flex-direction:
+                column;
+
+            justify-content:
+                center;
+
+            align-items:
+                center;
+
+            text-align:
+                center;
+
+            transition:
+                .3s ease;
+
+            box-shadow:
+                0 8px 25px
+                rgba(0,91,150,.10);
         }
+
         .card-summary:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 10px 20px rgba(15, 23, 42, 0.1);
+
+            transform:
+                translateY(-7px);
+
+            box-shadow:
+                0 18px 35px
+                rgba(0,91,150,.20);
         }
 
-        .bg-card-total { background: linear-gradient(135deg, #1e40af, #3b82f6); } /* Royal Blue */
-        .bg-card-menunggu { background: linear-gradient(135deg, #334155, #475569); } /* Slate */
-        .bg-card-diproses { background: linear-gradient(135deg, #0284c7, #0ea5e9); } /* Sky Blue */
-        .bg-card-selesai { background: linear-gradient(135deg, #0f766e, #14b8a6); } /* Teal */
 
-        /* Kartu Grafik */
+        /* Dekorasi card */
+
+        .card-summary::before {
+
+            content:
+                "";
+
+            position:
+                absolute;
+
+            width:
+                170px;
+
+            height:
+                170px;
+
+            border-radius:
+                50%;
+
+            background:
+                rgba(255,255,255,.08);
+
+            top:
+                -80px;
+
+            right:
+                -60px;
+        }
+
+        .card-summary::after {
+
+            content:
+                "";
+
+            position:
+                absolute;
+
+            width:
+                120px;
+
+            height:
+                120px;
+
+            border-radius:
+                50%;
+
+            background:
+                rgba(255,255,255,.06);
+
+            bottom:
+                -60px;
+
+            left:
+                -40px;
+        }
+
+
+        /* Warna card */
+
+        .bg-card-total {
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #075a96,
+                    #087fd0
+                );
+        }
+
+        .bg-card-menunggu {
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #086eb5,
+                    #08a4d8
+                );
+        }
+
+        .bg-card-diproses {
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #0875bb,
+                    #08addc
+                );
+        }
+
+        .bg-card-selesai {
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #087ab7,
+                    #10b8d8
+                );
+        }
+
+
+        .card-summary i {
+
+            font-size:
+                2.7rem;
+
+            margin-bottom:
+                10px;
+
+            color:
+                white;
+        }
+
+        .card-summary h6 {
+
+            font-size:
+                .85rem;
+
+            letter-spacing:
+                1px;
+
+            margin-bottom:
+                5px;
+
+            color:
+                white;
+
+            font-weight:
+                600;
+        }
+
+        .card-summary h2 {
+
+            font-size:
+                2.4rem;
+
+            margin:
+                0;
+
+            color:
+                white;
+
+            font-weight:
+                700;
+        }
+
+
+        /* =========================
+           CHART
+        ========================= */
+
+        .chart-grid {
+
+            display:
+                grid;
+
+            grid-template-columns:
+                repeat(2,1fr);
+
+            gap:
+                25px;
+        }
+
         .chart-card {
-            border: 1px solid #e2e8f0;
-            border-radius: 12px;
-            box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.05);
-            background-color: #ffffff;
+
+            background:
+                white;
+
+            border:
+                1px solid
+                rgba(0,102,179,.08);
+
+            border-radius:
+                22px;
+
+            padding:
+                25px;
+
+            box-shadow:
+                0 8px 30px
+                rgba(0,91,150,.07);
+
+            transition:
+                .3s ease;
         }
+
+        .chart-card:hover {
+
+            transform:
+                translateY(-3px);
+
+            box-shadow:
+                0 14px 35px
+                rgba(0,91,150,.12);
+        }
+
+        .chart-card h6 {
+
+            color:
+                #123b67;
+
+            font-size:
+                1.05rem;
+
+            font-weight:
+                700;
+
+            margin-bottom:
+                20px;
+        }
+
+
+        /* =========================
+           RESPONSIVE
+        ========================= */
+
+        @media(max-width:1100px) {
+
+            .kpi-grid {
+
+                grid-template-columns:
+                    repeat(2,1fr);
+            }
+        }
+
+
+        @media(max-width:768px) {
+
+            .wrapper {
+
+                flex-direction:
+                    column;
+            }
+
+            #sidebar {
+
+                width:
+                    100%;
+
+                min-width:
+                    100%;
+
+                min-height:
+                    auto;
+
+                position:
+                    relative;
+            }
+
+            .main-content {
+
+                padding:
+                    25px 20px;
+            }
+
+            .dashboard-header {
+
+                flex-direction:
+                    column;
+
+                align-items:
+                    flex-start;
+
+                gap:
+                    20px;
+            }
+
+            .kpi-grid {
+
+                grid-template-columns:
+                    1fr;
+            }
+
+            .chart-grid {
+
+                grid-template-columns:
+                    1fr;
+            }
+        }
+
     </style>
+
 </head>
+
+
 <body>
 
+
 <div class="wrapper">
-    <!-- MENU SIDEBAR (KIRI) -->
-    <nav id="sidebar" class="p-3 d-flex flex-column">
-        <div class="text-center mb-4 mt-2 border-bottom border-secondary pb-4">
-            <i class="bi bi-lightning-charge-fill text-info" style="font-size: 2.5rem;"></i>
-            <h5 class="fw-bold text-white mt-2 mb-0">PLN UP3 SBY</h5>
-            <small class="text-white-50">Surabaya Selatan</small>
+
+
+    <!-- =========================
+         SIDEBAR
+    ========================== -->
+
+    <aside id="sidebar">
+
+        <div class="sidebar-logo">
+
+            <i class="bi bi-lightning-charge-fill"></i>
+
+            <h5>
+                PLN ULP
+            </h5>
+
+            <small>
+                Dukuh Kupang
+            </small>
+
         </div>
 
-        <ul class="nav flex-column mb-auto w-100">
-            <li class="nav-item"><a href="/" class="nav-link active"><i class="bi bi-speedometer2 me-3"></i> Dashboard</a></li>
-            <li class="nav-item"><a href="/data-pengaduan" class="nav-link"><i class="bi bi-table me-3"></i> Data Pengaduan</a></li>
-            <li class="nav-item"><a href="/rekapitulasi" class="nav-link"><i class="bi bi-file-bar-graph me-3"></i> Rekapitulasi</a></li>
-            <li class="nav-item"><a href="/profil-pelanggan" class="nav-link"><i class="bi bi-person-badge me-3"></i> Profil</a></li>
-        </ul>
 
-        <hr class="border-secondary mt-5">
-        <div class="text-center text-white-50" style="font-size: 0.8rem;">
-            &copy; 2026 Kerja Praktik<br>Telkom University SBY
-        </div>
-    </nav>
+        <hr>
 
-    <!-- AREA KONTEN UTAMA (KANAN) -->
-    <div class="main-content">
-        <!-- Header -->
-        <div class="d-flex justify-content-between align-items-center mb-5">
+
+        <nav>
+
+            <a href="/dashboard"
+               class="nav-link active">
+
+                <i class="bi bi-speedometer2"></i>
+
+                Dashboard
+
+            </a>
+
+
+            <a href="/data-pengaduan"
+               class="nav-link">
+
+                <i class="bi bi-table"></i>
+
+                Data Pengaduan
+
+            </a>
+
+
+            <a href="/rekapitulasi"
+               class="nav-link">
+
+                <i class="bi bi-bar-chart"></i>
+
+                Rekapitulasi
+
+            </a>
+
+
+            <a href="/profil-pelanggan"
+               class="nav-link">
+
+                <i class="bi bi-person"></i>
+
+                Profil Pelanggan
+
+            </a>
+
+        </nav>
+
+    </aside>
+
+
+
+    <!-- =========================
+         MAIN CONTENT
+    ========================== -->
+
+    <main class="main-content">
+
+
+        <!-- HEADER -->
+
+        <div class="dashboard-header">
+
             <div>
-                <h3 class="fw-bolder text-dark mb-1">Dashboard Monitoring</h3>
-                <p class="text-secondary mb-0">Rekapitulasi Data Keluhan Pelanggan PT PLN (Persero) UP3 Surabaya Selatan</p>
+
+                <h3>
+                    Dashboard Monitoring Pengaduan
+                </h3>
+
+                <p>
+                    Rekapitulasi Data Pengaduan Pelanggan
+                    PLN ULP Dukuh Kupang
+                </p>
+
             </div>
-            <div class="d-none d-md-block">
-                <div class="bg-white px-4 py-2 rounded-pill shadow-sm text-secondary fw-semibold border border-light">
-                    <i class="bi bi-calendar3 me-2 text-primary"></i> Agustus 2026
-                </div>
+
+
+            <div class="date-box">
+
+                <i class="bi bi-calendar3"></i>
+
+                Agustus 2026
+
             </div>
+
         </div>
 
-        <!-- Scorecards -->
-        <div class="row mb-4 text-center">
-            <div class="col-md-3 mb-3">
-                <div class="card card-summary bg-card-total p-4">
-                    <i class="bi bi-folder2-open fs-1 mb-2 opacity-75"></i>
-                    <h6 class="text-uppercase fw-semibold mb-1" style="letter-spacing: 0.5px; font-size: 0.85rem;">Total Pengaduan</h6>
-                    <h2 class="fw-bold mb-0">{{ $total }}</h2>
-                </div>
+
+
+        <!-- =========================
+             KPI
+        ========================== -->
+
+        <div class="kpi-grid">
+
+
+            <div class="card-summary bg-card-total">
+
+                <i class="bi bi-folder"></i>
+
+                <h6>
+                    TOTAL PENGADUAN
+                </h6>
+
+                <h2>
+                    500
+                </h2>
+
             </div>
-            <div class="col-md-3 mb-3">
-                <div class="card card-summary bg-card-menunggu p-4">
-                    <i class="bi bi-clock-history fs-1 mb-2 opacity-75"></i>
-                    <h6 class="text-uppercase fw-semibold mb-1" style="letter-spacing: 0.5px; font-size: 0.85rem;">Menunggu</h6>
-                    <h2 class="fw-bold mb-0">{{ $menunggu }}</h2>
-                </div>
+
+
+
+            <div class="card-summary bg-card-menunggu">
+
+                <i class="bi bi-clock-history"></i>
+
+                <h6>
+                    MENUNGGU
+                </h6>
+
+                <h2>
+                    85
+                </h2>
+
             </div>
-            <div class="col-md-3 mb-3">
-                <div class="card card-summary bg-card-diproses p-4">
-                    <i class="bi bi-arrow-repeat fs-1 mb-2 opacity-75"></i>
-                    <h6 class="text-uppercase fw-semibold mb-1" style="letter-spacing: 0.5px; font-size: 0.85rem;">Sedang Diproses</h6>
-                    <h2 class="fw-bold mb-0">{{ $diproses }}</h2>
-                </div>
+
+
+
+            <div class="card-summary bg-card-diproses">
+
+                <i class="bi bi-arrow-repeat"></i>
+
+                <h6>
+                    SEDANG DIPROSES
+                </h6>
+
+                <h2>
+                    135
+                </h2>
+
             </div>
-            <div class="col-md-3 mb-3">
-                <div class="card card-summary bg-card-selesai p-4">
-                    <i class="bi bi-check-circle-fill fs-1 mb-2 opacity-75"></i>
-                    <h6 class="text-uppercase fw-semibold mb-1" style="letter-spacing: 0.5px; font-size: 0.85rem;">Selesai</h6>
-                    <h2 class="fw-bold mb-0">{{ $selesai }}</h2>
-                </div>
+
+
+
+            <div class="card-summary bg-card-selesai">
+
+                <i class="bi bi-check-circle"></i>
+
+                <h6>
+                    SELESAI
+                </h6>
+
+                <h2>
+                    280
+                </h2>
+
             </div>
+
+
         </div>
 
-        <!-- Grafik -->
-        <div class="row">
-            <div class="col-md-6 mb-4">
-                <div class="card chart-card p-4 h-100">
-                    <h6 class="fw-bold text-dark mb-4 text-center">Persentase Jenis Pengaduan</h6>
-                    <!-- Wadah grafik disesuaikan agar proporsional -->
-                    <div style="position: relative; height: 280px; width: 100%; display: flex; justify-content: center;">
-                        <canvas id="chartJenis"></canvas>
-                    </div>
-                </div>
+
+
+        <!-- =========================
+             CHART
+        ========================== -->
+
+        <div class="chart-grid">
+
+
+            <div class="chart-card">
+
+                <h6>
+                    Persentase Jenis Pengaduan
+                </h6>
+
+                <canvas id="jenisPengaduanChart"></canvas>
+
             </div>
-            <div class="col-md-6 mb-4">
-                <div class="card chart-card p-4 h-100">
-                    <h6 class="fw-bold text-dark mb-4 text-center">5 Wilayah Gangguan Terbanyak</h6>
-                    <div style="position: relative; height: 280px; width: 100%;">
-                        <canvas id="chartWilayah"></canvas>
-                    </div>
-                </div>
+
+
+            <div class="chart-card">
+
+                <h6>
+                    5 Wilayah Gangguan Terbanyak
+                </h6>
+
+                <canvas id="wilayahChart"></canvas>
+
             </div>
+
+
         </div>
-    </div>
+
+
+    </main>
+
 </div>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-
-<!-- Konfigurasi Grafik Modern Enterprise -->
-<script>
-    const dataJenis = @json($jenis_pengaduan);
-    const dataWilayah = @json($wilayah_terbanyak);
-
-    // Konfigurasi Font Default Chart.js
-    Chart.defaults.font.family = "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif";
-    Chart.defaults.color = '#64748b';
-
-    // 1. CHART DOUGHNUT (Sleek, cincin tipis, legend bulat)
-    const ctxJenis = document.getElementById('chartJenis').getContext('2d');
-    new Chart(ctxJenis, {
-        type: 'doughnut',
-        data: {
-            labels: Object.keys(dataJenis),
-            datasets: [{
-                data: Object.values(dataJenis),
-                // Palet biru bergradasi dari gelap ke terang
-                backgroundColor: ['#1e3a8a', '#2563eb', '#38bdf8', '#7dd3fc'],
-                borderWidth: 0, // Tanpa garis tepi agar flat & modern
-                hoverOffset: 6
-            }]
-        },
-        options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            cutout: '75%', // Semakin besar angkanya, semakin tipis donatnya (elegan)
-            plugins: {
-                legend: {
-                    position: 'bottom',
-                    labels: {
-                        usePointStyle: true, // Legend menjadi lingkaran, bukan kotak
-                        padding: 20,
-                        font: { size: 12 }
-                    }
-                },
-                tooltip: {
-                    backgroundColor: '#0f172a',
-                    padding: 12,
-                    cornerRadius: 8,
-                    titleFont: { size: 13, weight: 'normal' },
-                    bodyFont: { size: 14, weight: 'bold' }
-                }
-            }
-        }
-    });
-
-    // 2. CHART BAR (Ramping, ujung membulat, garis grid samar)
-    const ctxWilayah = document.getElementById('chartWilayah').getContext('2d');
-
-    // Membuat Efek Warna Gradien untuk Bar
-    let gradientBar = ctxWilayah.createLinearGradient(0, 0, 0, 300);
-    gradientBar.addColorStop(0, '#3b82f6'); // Biru cerah di atas
-    gradientBar.addColorStop(1, '#1e3a8a'); // Navy di bawah
-
-    new Chart(ctxWilayah, {
-        type: 'bar',
-        data: {
-            labels: Object.keys(dataWilayah),
-            datasets: [{
-                label: 'Total Laporan',
-                data: Object.values(dataWilayah),
-                backgroundColor: gradientBar,
-                borderRadius: 6, // Lengkungan di ujung batang
-                borderSkipped: false,
-                barThickness: 32 // Ketebalan batang agar seragam dan ramping
-            }]
-        },
-        options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            scales: {
-                y: {
-                    beginAtZero: true,
-                    grid: {
-                        color: '#f1f5f9', // Warna garis samar
-                        drawBorder: false,
-                        borderDash: [5, 5] // Garis bantu putus-putus
-                    },
-                    ticks: { stepSize: 1 } // Menampilkan angka bulat saja (1, 2, 3...)
-                },
-                x: {
-                    grid: { display: false, drawBorder: false } // Sumbu X bersih tanpa garis bantu
-                }
-            },
-            plugins: {
-                legend: { display: false }, // Sembunyikan tulisan 'Total Laporan' di atas
-                tooltip: {
-                    backgroundColor: '#0f172a',
-                    padding: 12,
-                    cornerRadius: 8,
-                    displayColors: false, // Hilangkan kotak warna di dalam tooltip
-                    titleFont: { size: 13, weight: 'normal', color: '#94a3b8' },
-                    bodyFont: { size: 15, weight: 'bold' }
-                }
-            },
-            animation: {
-                y: { duration: 1500, easing: 'easeOutQuart' } // Animasi halus saat dimuat
-            }
-        }
-    });
-</script>
 
 </body>
+
 </html>
