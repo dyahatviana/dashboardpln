@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\TaskController;
 
 // LANDING PAGE
 Route::get('/', function () {
@@ -50,6 +51,12 @@ Route::post('/logout', function () {
 Route::get('/dashboard', [DashboardController::class, 'index'])
     ->middleware('auth');
 
+    // TUGAS CS
+Route::get('/tugas/create', [TaskController::class, 'create'])
+    ->middleware('auth');
+
+Route::post('/tugas', [TaskController::class, 'store'])
+    ->middleware('auth');
 
 // DATA PENGADUAN
 Route::get('/data-pengaduan', [DashboardController::class, 'data']);
